@@ -1,0 +1,22 @@
+Q1:
+First I handle any edge cases, such as inputs like 'None' or non-strings, returning False for those instances.  Then, I use dictionaries to store the character counts of each letter in the words.  I chose this data structure because it has quick lookups.  Last, I check to make sure there are enough letters in string 's' for the counts of each letter in 't' such that t is an anagram of a substring of 's'.  I converted the character lists to sets, just in case the character lists are long.  This should help time efficiency somewhat.  The space complexity is O(len(s) + len(t)) (both space and time complexity are the same for worst, best, and average cases) since we are allocating new lists for both of the strings, and the time complexity is O(len(s) + len(t)) since we are going through each character of both strings.
+
+Q2:
+First I check to make sure the argument is actually a string.  Then, I break the string into a list, counting the frequency of each word and storing this in a dictionary with the letter as the key.  This allows us to next find letters that occur at least twice, storing the letter and number of times it appears (as a multiple of 2) in another dictionary.  If there are no letters that occur at least twice, we return 'No palindromes found.'.  Then, we use the palindrome dictionary to make our palindrome.  Finally, we join the list togther into a string and return it.
+
+It is space complexity O(len(s)) since we are creating new lists and dictionaries.  Time complexity is also O(len(s)) since we go through each character explicity.  The best, worst, and average cases are all the same since we must always make a new list and run through it.
+
+Q3:
+I sorted the edges by weight, then treated the sorted list as a queue or stack, popping off the element with the lowest edge value while there are still edges left to examine.  If either the nodes from the edge haven't been visited, add that edge to the return dictionary.
+
+It runs in O(|E|) space on average, worst, and best case since we have to go through all the edges no matter what.  It runs in O(|E| + |V|) time, because we have to examine the nodes and edges each time through the while loop.  I have a feeling this may not always give the smallest total edge weight, but I haven't been able to come up with a case that proves that.
+
+Q4:
+I first check to make sure the variables are the right types.  Then, I make a queue out of the nodes, starting with the supplied root.  I go through each element in that node's row, and if the element is a one, I add that element to a dictionary with the current node as it's value in a list.  If the current node is in the dictionary, that path is appended to the elements path.  The element's value is added to the 'nodes' queue, and the process repeats until we're out of nodes or we have found the n1 and n2 nodes.  Then, the paths for n1D and n2D are checked to see if they have a common ancestor, stopping at the lowest point on the tree.
+
+Where n is number of elements in the tree, it runs in O(nlog(n)) time on average, because we have to traverse the tree and each element for each layer. Worst case is (On^2) because we would have to traverse the entire tree both depth-wise and on each level.  Best case would be O(n) if n1 and n2 are children of the root, because we go through each element of the root list once.  It runs in O(log(n)) space on average because we make a dictionary for each node until we find n1 and n2.  Worst case it runs O(n) space because we have to create a dictionary item for each node.  Best case it runs O(1) because we only need two dictionary items for n1 and n2 if they are children of the root.
+
+Q5:
+I first check to make sure the variables are the right types and that m is positive, then go through the list and increment a counter to measure the length.  I also store each value in a normal Python list, up to the size of m.  I then return the first item from the list that was stored.
+
+If n is the length of the linkedlist, it runs in O(n) time for average, best, and worst cases, since we loop through the whole linkedlist because we have to go to the end.  It runs in O(m) space (O(n) worst case, O(1) best case) because we have to store a list to get the answer m from the end of the linked list.  We could trade off O(2n)~O(n) time by looping through the list twice, and run in O(1) space.
