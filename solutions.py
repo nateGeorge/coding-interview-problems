@@ -1,4 +1,5 @@
 def question1(s, t):
+    from itertools import permutations
     if s is None or t is None or not isinstance(s, str) \
       or not isinstance(t, str):
         return False
@@ -27,14 +28,21 @@ def question1(s, t):
         if v > sD[l]:
             return False
 
-    if letts.join('') in t:
-        return True
+    subStr = ''.join(letts)
+    subStrs = [''.join(ls) for ls in permutations(subStr)]
+    for subS in subStrs:
+        if subS in t:
+            return True
 
     return False
 
+print('')
+print('Q1')
 print question1('uddacity', 'uddd')
 # False
 print question1('udacity', 'ud')
+# True
+print question1('udacity', 'du')
 # True
 print question1(None, 'ud')
 # False
@@ -53,7 +61,7 @@ def question2(s):
     s = re.sub('\s', '', s)
     s = s.translate(string.maketrans("", ""), string.punctuation)
 
-    pal = ''
+    pal = s[0]
     for i in range(len(s)):
         for j in range(i):
             substr = s[j:i+1]
@@ -61,17 +69,16 @@ def question2(s):
                 if len(substr) > len(pal):
                     pal = substr
 
-    if len(pal) == 0:
-        return 'No palindromes found.'
-
     return pal
 
+print('')
+print('Q2')
 print question2('acbbcacdc')
 # acbbca
 print question2('qqaacbca')
 # acbca
 print question2('abcd')
-# No palindromes found.
+# a
 print question2(None)
 # Not a string.
 print question2(1)
@@ -165,6 +172,9 @@ g.insert_edge(1, 'A', 'B')
 g.insert_edge(2, 'B', 'C')
 g.insert_edge(3, 'C', 'B')
 g.insert_edge(4, 'C', 'A')
+
+print('')
+print('Q3')
 print question3(g)
 # {'A': [('B', 1)], 'B': [('A', 1), ('C', 2)], 'C': [('B', 2)]}
 print question3(None)
@@ -223,6 +233,8 @@ def question4(T, r, n1, n2):
 
     return 'No common ancestor.'
 
+print('')
+print('Q4')
 print question4([[0, 1, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0],
                 [1, 0, 0, 0, 1], [0, 0, 0, 0, 0]], 3, 1, 4)
 # 3
@@ -242,20 +254,18 @@ def question5(ll, m):
         return
 
     cnt = 1  # counter for list length
-    ans = [ll.data]
+    ans = ll
     while ll.next:
         ll = ll.next
         cnt += 1
         if cnt > m:
-            ans.pop(0)
-
-        ans.extend(ll.data)
+            ans = ans.next
 
     if cnt < m:
         print 'm is not longer than linked list length'
         return
-
-    return ans[0]
+    else:
+        return ans.data
 
 
 class Node(object):
@@ -275,7 +285,8 @@ ll3.next = ll4
 ll4.next = ll5
 ll5.next = ll6
 
-
+print('')
+print('Q5')
 print question5(ll1, 3)
 # 'e'
 print question5(ll1, 'a')
