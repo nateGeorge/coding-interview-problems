@@ -1,40 +1,35 @@
 def question1(s, t):
-    from itertools import permutations
     if s is None or t is None or not isinstance(s, str) \
       or not isinstance(t, str):
         return False
 
-    sL = list(s)
-    tL = list(t)
-    sD = {}
-    tD = {}
-    for lett in sL:
-        sD.setdefault(lett, 0)
-        sD[lett] += 1
+    tD = string_dict(t)
+    sD = string_dict(s)
 
-    for lett in tL:
-        tD.setdefault(lett, 0)
-        tD[lett] += 1
+    sL = sD.keys()
 
-    sL = set(sL)
-    tL = set(tL)
-    letts = []
-
+    # make sure it's even worth going through all the substrings of s first
     for l, v in tD.items():
-        if l not in sL:
-            return False
-        else:
-            letts.extend([l]*sD[l])
-        if v > sD[l]:
+        if l not in sL or v > sD[l]:
             return False
 
-    subStr = ''.join(letts)
-    subStrs = [''.join(ls) for ls in permutations(subStr)]
-    for subS in subStrs:
-        if subS in t:
+    # go through substrings of s of length t and see if all characters match
+    tLen = len(t)
+    for i in range(len(s) - tLen):
+        subStrD = string_dict(s[i:i + tLen])
+        if subStrD == tD:
             return True
 
     return False
+
+
+def string_dict(st):
+    stringDict = {}
+    for lett in st:
+        stringDict.setdefault(lett, 0)
+        stringDict[lett] += 1
+
+    return stringDict
 
 print('')
 print('Q1')
