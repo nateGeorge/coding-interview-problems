@@ -1,17 +1,22 @@
 from timeit import timeit
 
 def fib(x):
-  a, b = 0, 1
-  for i in range(x-1):
-    #print(a)
+    if not isinstance(x, int):
+        raise ValueError("x must be an int")
+    a, b = 0, 1
+    for i in range(x):
     a, b = b, a+b
-  
-  return b
+    return a
 
 def rec_fib(n):
     '''inefficient recursive function as defined, returns Fibonacci number'''
+    # the commented lines help understand how the recursion is working
+    #print('n=', n)
     if n > 1:
+        #print(n-1, n-2)
         return rec_fib(n-1) + rec_fib(n-2)
+    #if n == 1:
+    #    print('adding 1')
     return n
 
 def mem_fib(n, _cache={}):
